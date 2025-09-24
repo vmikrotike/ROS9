@@ -42,22 +42,22 @@ permissions:
   contents: write
 
 env:
-  CUSTOM_LICENSE_PRIVATE_KEY: ${{ secrets.CUSTOM_LICENSE_PRIVATE_KEY }}
-  CUSTOM_LICENSE_PUBLIC_KEY: ${{ secrets.CUSTOM_LICENSE_PUBLIC_KEY }}
-  CUSTOM_NPK_SIGN_PRIVATE_KEY: ${{ secrets.CUSTOM_NPK_SIGN_PRIVATE_KEY }}
-  CUSTOM_NPK_SIGN_PUBLIC_KEY: ${{ secrets.CUSTOM_NPK_SIGN_PUBLIC_KEY }}
-  CUSTOM_CLOUD_PUBLIC_KEY: ${{ secrets.CUSTOM_CLOUD_PUBLIC_KEY }}
-  MIKRO_LICENSE_PUBLIC_KEY: ${{ secrets.MIKRO_LICENSE_PUBLIC_KEY }}
-  MIKRO_NPK_SIGN_PUBLIC_KEY: ${{ secrets.MIKRO_NPK_SIGN_PUBLIC_KEY }}
-  MIKRO_CLOUD_PUBLIC_KEY: ${{ secrets.MIKRO_CLOUD_PUBLIC_KEY }}
-  MIKRO_LICENCE_URL: ${{ secrets.MIKRO_LICENCE_URL }}
-  CUSTOM_LICENCE_URL: ${{ secrets.CUSTOM_LICENCE_URL }}
-  MIKRO_UPGRADE_URL: ${{ secrets.MIKRO_UPGRADE_URL }}
-  CUSTOM_UPGRADE_URL: ${{ secrets.CUSTOM_UPGRADE_URL }}
-  MIKRO_RENEW_URL: ${{ secrets.MIKRO_RENEW_URL }}
-  CUSTOM_RENEW_URL: ${{ secrets.CUSTOM_RENEW_URL }}
-  MIKRO_CLOUD_URL: ${{ secrets.MIKRO_CLOUD_URL }}
-  CUSTOM_CLOUD_URL: ${{ secrets.CUSTOM_CLOUD_URL }}
+  CUSTOM_LICENSE_PRIVATE_KEY: 9DBC845E9018537810FDAE62824322EEE1B12BAD81FCA28EC295FB397C61CE0B
+  CUSTOM_LICENSE_PUBLIC_KEY: 723A34A6E3300F23E4BAA06156B9327514AEC170732655F16E04C17928DD770F
+  CUSTOM_NPK_SIGN_PRIVATE_KEY: 7D008D9B80B036FB0205601FEE79D550927EBCA937B7008CC877281F2F8AC640
+  CUSTOM_NPK_SIGN_PUBLIC_KEY: 28F886E32C141123126CFBCAD56766E99D1720CEB1F12BE2468BEBE7662FBEDB
+  MIKRO_LICENSE_PUBLIC_KEY: 8E1067E4305FCDC0CFBF95C10F96E5DFE8C49AEF486BD1A4E2E96C27F01E3E32
+  MIKRO_NPK_SIGN_PUBLIC_KEY: C293CED638A2A33C681FC8DE98EE26C54EADC5390C2DFCE197D35C83C416CF59
+  CUSTOM_CLOUD_PUBLIC_KEY: C293CED638A2A33C681FC8DE98EE26C54EADC5390C2DFCE197D35C83C416CF59
+  MIKRO_CLOUD_PUBLIC_KEY: C293CED638A2A33C681FC8DE98EE26C54EADC5390C2DFCE197D35C83C416CF59
+  MIKRO_LICENCE_URL: license.mikrotik.com
+  CUSTOM_LICENCE_URL: license.mikrotik.ltd
+  MIKRO_UPGRADE_URL: upgrade.mikrotik.com
+  CUSTOM_UPGRADE_URL: upgrade.mikrotik.ltd
+  MIKRO_RENEW_URL: renew.mikrotik.com
+  CUSTOM_RENEW_URL: renew.mikrotik.ltd
+  MIKRO_CLOUD_URL: cloud.mikrotik.com
+  CUSTOM_CLOUD_URL: cloud.mikrotik.ltd
 
 jobs:
   Set_Variables:
@@ -147,13 +147,13 @@ jobs:
         echo "LATEST_VERSION=${LATEST_VERSION}" >> $GITHUB_ENV
         sudo apt-get update > /dev/null
         
-    - name: Get loader patch files
-      if: steps.get_latest.outputs.has_new_version == 'true'
-      run: |
-        wget -nv -O loader.7z https://${{ env.CUSTOM_UPGRADE_URL }}/routeros/loader.7z
-        sudo apt-get install -y p7zip-full > /dev/null
-        7z x -p"${{ secrets.LOADER_7Z_PASSWORD }}" loader.7z >> /dev/null
-        rm loader.7z
+    #- name: Get loader patch files
+    #  if: steps.get_latest.outputs.has_new_version == 'true'
+    #  run: |
+    #    wget -nv -O loader.7z https://${{ env.CUSTOM_UPGRADE_URL }}/routeros/loader.7z
+    #    sudo apt-get install -y p7zip-full > /dev/null
+    #    7z x -p"${{ secrets.LOADER_7Z_PASSWORD }}" loader.7z >> /dev/null
+    #    rm loader.7z
 
     - name: Cache Squashfs
       if: steps.get_latest.outputs.has_new_version == 'true'
